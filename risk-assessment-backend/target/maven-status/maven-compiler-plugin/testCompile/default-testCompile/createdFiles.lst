@@ -1,0 +1,6 @@
+com/riskassessment/controller/RiskControllerTest.class
+com/riskassessment/RiskAssessmentApplicationTest.class
+com/riskassessment/repository/RiskRepositoryTest.class
+com/riskassessment/service/RiskServiceTest.class
+com/riskassessment/selenium/RiskAssessmentIntegrationTest.class
+com/riskassessment/config/CorsConfigTest.class

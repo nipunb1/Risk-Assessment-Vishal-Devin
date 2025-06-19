@@ -1,0 +1,85 @@
+<div class="risk-details-container">
+  <div class="header-section">
+    <h1>Risk Details</h1>
+    <div class="header-actions">
+      <button class="btn btn-secondary" (click)="router.navigate(['/dashboard'])">
+        Back to Dashboard
+      </button>
+      <button class="btn btn-success" (click)="router.navigate(['/create-risk'])">
+        Create New Risk
+      </button>
+    </div>
+  </div>
+
+  <div class="filter-section" *ngIf="!selectedRiskType">
+    <h3>Filter by Status:</h3>
+    <div class="filter-buttons">
+      <button class="btn btn-outline" (click)="filterByStatus('ALL')">All</button>
+      <button class="btn btn-outline" (click)="filterByStatus('OPEN')">Open</button>
+      <button class="btn btn-outline" (click)="filterByStatus('IN_PROGRESS')">In Progress</button>
+      <button class="btn btn-outline" (click)="filterByStatus('CLOSED')">Closed</button>
+    </div>
+  </div>
+
+  <div class="selected-type-info" *ngIf="selectedRiskType">
+    <h3>Showing risks for: {{getRiskTypeDisplay(selectedRiskType)}}</h3>
+    <button class="btn btn-outline" (click)="router.navigate(['/risk-details'])">
+      View All Risks
+    </button>
+  </div>
+
+  <div class="loading-spinner" *ngIf="loading">
+    <p>Loading risks...</p>
+  </div>
+
+  <div class="risks-table-container" *ngIf="!loading">
+    <table class="risks-table" *ngIf="filteredRisks.length > 0">
+      <thead>
+        <tr>
+          <th>Risk Raise Date</th>
+          <th>Risk Type</th>
+          <th>Risk Probability</th>
+          <th>Risk Description</th>
+          <th>Risk Status</th>
+          <th>Updates/Remarks</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let risk of filteredRisks">
+          <td>{{formatDate(risk.riskDate)}}</td>
+          <td>{{getRiskTypeDisplay(risk.riskType)}}</td>
+          <td>
+            <span class="probability-badge probability-{{risk.riskProbability.toLowerCase()}}">
+              {{getRiskProbabilityDisplay(risk.riskProbability)}}
+            </span>
+          </td>
+          <td class="description-cell">{{risk.riskDesc}}</td>
+          <td>
+            <span class="status-badge {{getStatusClass(risk.riskStatus)}}">
+              {{getRiskStatusDisplay(risk.riskStatus)}}
+            </span>
+          </td>
+          <td class="remarks-cell">{{risk.riskRemarks || 'No remarks'}}</td>
+          <td class="actions-cell">
+            <button class="btn btn-sm btn-primary" (click)="editRisk(risk)">
+              Edit
+            </button>
+            <button class="btn btn-sm btn-danger" (click)="deleteRisk(risk)">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="empty-state" *ngIf="filteredRisks.length === 0">
+      <h3>No risks found</h3>
+      <p *ngIf="selectedRiskType">No risks found for the selected type: {{getRiskTypeDisplay(selectedRiskType)}}</p>
+      <p *ngIf="!selectedRiskType">No risks have been created yet.</p>
+      <button class="btn btn-success" (click)="router.navigate(['/create-risk'])">
+        Create First Risk
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,135 @@
+<div class="create-risk-container">
+  <div class="header-section">
+    <h1>{{isEditMode ? 'Edit Risk' : 'Create New Risk'}}</h1>
+    <div class="header-actions">
+      <button class="btn btn-secondary" (click)="cancel()">
+        Cancel
+      </button>
+    </div>
+  </div>
+
+  <div class="loading-spinner" *ngIf="loading">
+    <p>{{isEditMode ? 'Loading risk data...' : 'Saving risk...'}}</p>
+  </div>
+
+  <form class="risk-form" (ngSubmit)="onSubmit()" #riskForm="ngForm" *ngIf="!loading">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="riskDate">Risk Raise Date *</label>
+        <input
+          type="date"
+          id="riskDate"
+          name="riskDate"
+          [(ngModel)]="risk.riskDate"
+          required
+          class="form-control"
+          [max]="maxDate"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="riskType">Risk Type *</label>
+        <select
+          id="riskType"
+          name="riskType"
+          [(ngModel)]="risk.riskType"
+          required
+          class="form-control"
+        >
+          <option *ngFor="let type of riskTypes" [value]="type.value">
+            {{type.label}}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="riskProbability">Risk Probability *</label>
+        <select
+          id="riskProbability"
+          name="riskProbability"
+          [(ngModel)]="risk.riskProbability"
+          required
+          class="form-control"
+        >
+          <option *ngFor="let prob of riskProbabilities" [value]="prob.value">
+            {{prob.label}}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="riskStatus">Risk Status *</label>
+        <select
+          id="riskStatus"
+          name="riskStatus"
+          [(ngModel)]="risk.riskStatus"
+          required
+          class="form-control"
+        >
+          <option *ngFor="let status of riskStatuses" [value]="status.value">
+            {{status.label}}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group full-width">
+      <label for="riskDesc">Risk Description *</label>
+      <textarea
+        id="riskDesc"
+        name="riskDesc"
+        [(ngModel)]="risk.riskDesc"
+        required
+        class="form-control"
+        rows="4"
+        placeholder="Enter detailed description of the risk..."
+        maxlength="1000"
+      ></textarea>
+      <small class="char-count">{{risk.riskDesc.length}}/1000 characters</small>
+    </div>
+
+    <div class="form-group full-width">
+      <label for="riskRemarks">Updates/Remarks</label>
+      <textarea
+        id="riskRemarks"
+        name="riskRemarks"
+        [(ngModel)]="risk.riskRemarks"
+        class="form-control"
+        rows="3"
+        placeholder="Enter any additional remarks or updates..."
+        maxlength="500"
+      ></textarea>
+      <small class="char-count">{{risk.riskRemarks.length}}/500 characters</small>
+    </div>
+
+    <div class="form-actions">
+      <button
+        type="button"
+        class="btn btn-outline"
+        (click)="resetForm()"
+        *ngIf="!isEditMode"
+      >
+        Reset Form
+      </button>
+      <button
+        type="submit"
+        class="btn btn-success"
+        [disabled]="!riskForm.form.valid || loading"
+      >
+        {{isEditMode ? 'Update Risk' : 'Create Risk'}}
+      </button>
+    </div>
+  </form>
+
+  <div class="form-help">
+    <h3>Form Guidelines:</h3>
+    <ul>
+      <li>All fields marked with * are required</li>
+      <li>Risk date cannot be in the future</li>
+      <li>Risk description should be detailed and specific</li>
+      <li>Use remarks field for additional context or updates</li>
+    </ul>
+  </div>
+</div>

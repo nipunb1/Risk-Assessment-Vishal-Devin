@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RiskService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Risk Assessment Backend</a> &gt; <a href="index.source.html" class="el_package">com.riskassessment.service</a> &gt; <span class="el_source">RiskService.java</span></div><h1>RiskService.java</h1><pre class="source lang-java linenums">package com.riskassessment.service;
+
+import com.riskassessment.entity.Risk;
+import com.riskassessment.repository.RiskRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+@Service
+<span class="fc" id="L14">public class RiskService {</span>
+    
+    @Autowired
+    private RiskRepository riskRepository;
+    
+    public List&lt;Risk&gt; getAllRisks() {
+<span class="fc" id="L20">        return riskRepository.findAll();</span>
+    }
+    
+    public Optional&lt;Risk&gt; getRiskById(Long id) {
+<span class="fc" id="L24">        return riskRepository.findById(id);</span>
+    }
+    
+    public Risk createRisk(Risk risk) {
+<span class="fc" id="L28">        return riskRepository.save(risk);</span>
+    }
+    
+    public Risk updateRisk(Long id, Risk riskDetails) {
+<span class="fc" id="L32">        Risk risk = riskRepository.findById(id)</span>
+<span class="fc" id="L33">                .orElseThrow(() -&gt; new RuntimeException(&quot;Risk not found with id: &quot; + id));</span>
+        
+<span class="fc" id="L35">        risk.setRiskDate(riskDetails.getRiskDate());</span>
+<span class="fc" id="L36">        risk.setRiskType(riskDetails.getRiskType());</span>
+<span class="fc" id="L37">        risk.setRiskProbability(riskDetails.getRiskProbability());</span>
+<span class="fc" id="L38">        risk.setRiskDesc(riskDetails.getRiskDesc());</span>
+<span class="fc" id="L39">        risk.setRiskStatus(riskDetails.getRiskStatus());</span>
+<span class="fc" id="L40">        risk.setRiskRemarks(riskDetails.getRiskRemarks());</span>
+        
+<span class="fc" id="L42">        return riskRepository.save(risk);</span>
+    }
+    
+    public void deleteRisk(Long id) {
+<span class="fc" id="L46">        Risk risk = riskRepository.findById(id)</span>
+<span class="fc" id="L47">                .orElseThrow(() -&gt; new RuntimeException(&quot;Risk not found with id: &quot; + id));</span>
+<span class="fc" id="L48">        riskRepository.delete(risk);</span>
+<span class="fc" id="L49">    }</span>
+    
+    public List&lt;Risk&gt; getNonClosedRisks() {
+<span class="fc" id="L52">        return riskRepository.findAllNonClosedRisks();</span>
+    }
+    
+    public Map&lt;String, Long&gt; getRiskCountByType() {
+<span class="fc" id="L56">        List&lt;Object[]&gt; results = riskRepository.countNonClosedRisksByType();</span>
+<span class="fc" id="L57">        Map&lt;String, Long&gt; riskCounts = new HashMap&lt;&gt;();</span>
+        
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        for (Object[] result : results) {</span>
+<span class="fc" id="L60">            Risk.RiskType riskType = (Risk.RiskType) result[0];</span>
+<span class="fc" id="L61">            Long count = (Long) result[1];</span>
+<span class="fc" id="L62">            riskCounts.put(riskType.getDisplayName(), count);</span>
+<span class="fc" id="L63">        }</span>
+        
+<span class="fc" id="L65">        return riskCounts;</span>
+    }
+    
+    public List&lt;Risk&gt; getRisksByType(Risk.RiskType riskType) {
+<span class="fc" id="L69">        return riskRepository.findByRiskType(riskType);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -1,0 +1,39 @@
+<div class="dashboard-container">
+  <h1>Risk Assessment Dashboard</h1>
+  
+  <div class="chart-section">
+    <div class="chart-container">
+      <canvas id="riskChart" width="400" height="400"></canvas>
+    </div>
+    
+    <div class="summary-stats" *ngIf="riskCounts && Object.keys(riskCounts).length > 0">
+      <h3>Risk Summary</h3>
+      <div class="stats-grid">
+        <div class="stat-item" *ngFor="let item of riskCounts | keyvalue">
+          <span class="stat-label">{{item.key}}:</span>
+          <span class="stat-value">{{item.value}}</span>
+        </div>
+      </div>
+      <div class="total-risks">
+        <strong>Total Non-Closed Risks: {{getTotalRisks()}}</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="action-buttons">
+    <button class="btn btn-primary" (click)="navigateToRiskDetails()">
+      View All Risks
+    </button>
+    <button class="btn btn-success" (click)="router.navigate(['/create-risk'])">
+      Create New Risk
+    </button>
+  </div>
+
+  <div class="empty-state" *ngIf="!riskCounts || Object.keys(riskCounts).length === 0">
+    <h3>No risks found</h3>
+    <p>There are currently no non-closed risks in the system.</p>
+    <button class="btn btn-success" (click)="router.navigate(['/create-risk'])">
+      Create First Risk
+    </button>
+  </div>
+</div>

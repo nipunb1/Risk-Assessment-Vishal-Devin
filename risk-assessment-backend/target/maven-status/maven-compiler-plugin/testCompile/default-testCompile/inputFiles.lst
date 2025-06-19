@@ -1,0 +1,6 @@
+/home/ubuntu/risk-assessment-project/risk-assessment-backend/src/test/java/com/riskassessment/selenium/RiskAssessmentIntegrationTest.java
+/home/ubuntu/risk-assessment-project/risk-assessment-backend/src/test/java/com/riskassessment/controller/RiskControllerTest.java
+/home/ubuntu/risk-assessment-project/risk-assessment-backend/src/test/java/com/riskassessment/repository/RiskRepositoryTest.java
+/home/ubuntu/risk-assessment-project/risk-assessment-backend/src/test/java/com/riskassessment/RiskAssessmentApplicationTest.java
+/home/ubuntu/risk-assessment-project/risk-assessment-backend/src/test/java/com/riskassessment/service/RiskServiceTest.java
+/home/ubuntu/risk-assessment-project/risk-assessment-backend/src/test/java/com/riskassessment/config/CorsConfigTest.java

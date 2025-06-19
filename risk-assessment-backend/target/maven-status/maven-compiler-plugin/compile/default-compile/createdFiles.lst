@@ -1,0 +1,9 @@
+com/riskassessment/config/CorsConfig.class
+com/riskassessment/entity/Risk$RiskStatus.class
+com/riskassessment/entity/Risk$RiskProbability.class
+com/riskassessment/RiskAssessmentApplication.class
+com/riskassessment/repository/RiskRepository.class
+com/riskassessment/service/RiskService.class
+com/riskassessment/controller/RiskController.class
+com/riskassessment/entity/Risk$RiskType.class
+com/riskassessment/entity/Risk.class
