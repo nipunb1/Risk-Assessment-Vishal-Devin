@@ -20,7 +20,7 @@ export interface RiskCountByType {
   providedIn: 'root'
 })
 export class RiskService {
-  private apiUrl = '/api/risks';
+  private apiUrl = 'http://localhost:8080/api/risks';
 
   constructor(private http: HttpClient) { }
 
